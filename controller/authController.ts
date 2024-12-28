@@ -149,18 +149,21 @@ export const loginUser = asyncHandler(async (req: Request, res: Response): Promi
 
 
 
-    const token = jwt.sign({ userId: result._id }, process.env.JWT_KEY as string, { expiresIn: "7d" });
-    if (result.role === "user") {
-        res.cookie("user", token, { maxAge: 1000 * 60 * 60 * 24 })
-        await publishToQueue("user", result)
+    const token = jwt.sign({ userId: result._id }, process.env.JWT_KEY as string, { expiresIn: "1h" })
+    // if (result.role === "user") {
+    //     res.cookie("user", token, {
+    //         maxAge: 1000 * 60 * 60 * 24,
+    //         httpOnly: true,
+    //         path: "/"
+    //     })
+    //     await publishToQueue("user", result)
 
-    } else {
-        res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 24 })
-        await publishToQueue("admin", result)
-    }
+    // } else {
+    //     res.cookie("admin", token, { maxAge: 1000 * 60 * 60 * 24 })
+    //     await publishToQueue("admin", result)
+    // }
     res.status(200).json({
         message: "Login successful!",
-        token,
         user: {
             id: result._id,
             name: result.name,
@@ -168,6 +171,7 @@ export const loginUser = asyncHandler(async (req: Request, res: Response): Promi
             mobile: result.mobile,
             profile: result.profile,
             role: result.role,
+            token: token
         },
     });
 
