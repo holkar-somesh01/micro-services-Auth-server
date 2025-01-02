@@ -6,42 +6,42 @@ export interface User extends Document {
     email: string;
     password: string;
     mobile: string;
-    profile:string;
+    profile: string;
     role: "admin" | "user";
-    isActive:boolean // Enum for role
-  }
+    isActive: boolean // Enum for role
+}
 
-const userSchema:Schema<User> =new mongoose.Schema({
-    name:{ 
-        type:String,
-        required:true
+const userSchema: Schema<User> = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
     },
-    email:{
-        type:String,
-        required:true
+    email: {
+        type: String,
+        required: true
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
     },
-    mobile:{
-        type:String,
-        required:true
+    mobile: {
+        type: String,
+        required: true
     },
-    role:{
-        type:String,
-        enum:["admin","user"],
-        default:"user"
+    role: {
+        type: String,
+        enum: ["admin", "user"],
+        default: "user"
     },
-    profile:{
-        type:String
+    profile: {
+        type: String
     },
-    isActive:{
-        type:Boolean,
-        default:true
+    isActive: {
+        type: Boolean,
+        default: true
     }
-},{timestamps:true})
+}, { timestamps: true })
 
-const User:Model<User>=mongoose.model<User>("user",userSchema)
+const User: Model<User> = mongoose.model<User>("user", userSchema)
 
 export default User
